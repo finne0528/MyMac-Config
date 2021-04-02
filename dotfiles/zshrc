@@ -25,9 +25,6 @@ fi
 # anyenv settings
 eval "$(anyenv init -)"
 
-# nodenv npm settings
-export PATH="$HOME/.anyenv/envs/nodenv/node_modules/.bin:$PATH"
-
 # aliases
 alias relogin='exec $SHELL -l'
 alias la='ls -a'
