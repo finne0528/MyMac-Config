@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-MYMAC_CONFIG_PATH=$(dirname "$0")
+MYMAC_CONFIG_PATH=$(cd $(dirname $0) || exit; pwd)
 PLIST_PREFERENCES_PATH="$HOME/Library/Preferences"
 
 # setup dotfiles
@@ -12,12 +12,13 @@ echo "******************"
 for dotfile (*) {
   if [[ -e "$HOME/.$dotfile" ]]; then
     echo -n "warning: '$HOME/.$dotfile' already exists. override it? (y/N): "
-    if ! read -q; then
+    if read -q; then
+      ln -sfn "$MYMAC_CONFIG_PATH/dotfiles/$dotfile" "$HOME/.$dotfile"
+      echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/dotfiles/$dotfile => $HOME/.$dotfile"
+    else
       echo "\n[SKIP] create a symbolic link $MYMAC_CONFIG_PATH/dotfiles/$dotfile => $HOME/.$dotfile"
-      continue
     fi
-    ln -sf "$MYMAC_CONFIG_PATH/dotfiles/$dotfile" "$HOME/.$dotfile"
-    echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/dotfiles/$dotfile => $HOME/.$dotfile"
+    continue
   fi
 
   ln -s "$MYMAC_CONFIG_PATH/dotfiles/$dotfile" "$HOME/.$dotfile"
@@ -35,7 +36,8 @@ if [[ -e "$HOME/.vim" ]]; then
   if ! read -q; then
     echo "\n[SKIP] create a symbolic link $MYMAC_CONFIG_PATH/app/vim => $HOME/.vim"
   else
-    ln -sf "$MYMAC_CONFIG_PATH/app/vim" "$HOME/.vim"
+    rm -rf "$HOME/.vim"
+    ln -s "$MYMAC_CONFIG_PATH/app/vim" "$HOME/.vim"
     echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/app/vim => $HOME/.vim"
   fi
 else
@@ -52,12 +54,13 @@ echo "****************"
 for plist (*) {
   if [[ -e "$PLIST_PREFERENCES_PATH/$plist" ]]; then
     echo -n "warning: '$PLIST_PREFERENCES_PATH/$plist' already exists. override it? (y/N): "
-    if ! read -q; then
+    if read -q; then
+      ln -sf "$MYMAC_CONFIG_PATH/plist/$plist" "$PLIST_PREFERENCES_PATH/$plist"
+      echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/plist/$plist => $PLIST_PREFERENCES_PATH/$plist"
+    else
       echo "\n[SKIP] create a symbolic link $MYMAC_CONFIG_PATH/plist/$plist => $PLIST_PREFERENCES_PATH/$plist"
-      continue
     fi
-    ln -sf "$MYMAC_CONFIG_PATH/plist/$plist" "$PLIST_PREFERENCES_PATH/$plist"
-    echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/plist/$plist => $PLIST_PREFERENCES_PATH/$plist"
+    continue
   fi
 
   ln -s "$MYMAC_CONFIG_PATH/plist/$plist" "$PLIST_PREFERENCES_PATH/$plist"
