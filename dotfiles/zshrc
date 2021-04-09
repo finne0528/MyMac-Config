@@ -22,12 +22,29 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# homebrew settings
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # anyenv settings
 eval "$(anyenv init -)"
 
 # aliases
 alias relogin='exec $SHELL -l'
-alias la='ls -a'
-alias ll='ls -l'
-alias lla='ls -la'
-alias drive="skicka"
+
+if command -v exa > /dev/null; then
+  alias ls='exa'
+  alias la='ls -a'
+  alias ll='ls -lbh'
+  alias lt='ls -T'
+  alias lla='ll -a'
+  alias llt='ll -T'
+  alias llta='ll -aT'
+fi
+
+if command -v bat > /dev/null; then
+  alias cat='bat'
+fi
+
+if command -v skicka > /dev/null; then
+  alias drive="skicka"
+fi
