@@ -31,6 +31,7 @@ cd "$MYMAC_CONFIG_PATH/app" || (echo "error: $MYMAC_CONFIG_PATH/app not found. t
 echo "**************************"
 echo "* setup app config files *"
 echo "**************************"
+# vim
 if [[ -e "$HOME/.vim" ]]; then
   echo -n "warning: '$HOME/.vim' already exists. override it? (y/N): "
   if ! read -q; then
@@ -43,6 +44,19 @@ if [[ -e "$HOME/.vim" ]]; then
 else
   ln -s "$MYMAC_CONFIG_PATH/app/vim" "$HOME/.vim"
   echo "[OK] create a symbolic link $MYMAC_CONFIG_PATH/app/vim => $HOME/.vim"
+fi
+if [[ -e "$HOME/Boostnote" ]]; then
+  echo -n "warning: '$HOME/Boostnote' already exis6zats. override it? (y/N): "
+  if ! read -q; then
+    echo "\n[SKIP] create a symbolic link $MYMAC_CONFIG_PATH/app/Boostnote => $HOME/Boostnote"
+  else
+    rm -rf "$HOME/Boostnote"
+    ln -s "$MYMAC_CONFIG_PATH/app/Boostnote" "$HOME/Boostnote"
+    echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/app/Boostnote => $HOME/Boostnote"
+  fi
+else
+  ln -s "$MYMAC_CONFIG_PATH/app/Boostnote" "$HOME/Boostnote"
+  echo "[OK] create a symbolic link $MYMAC_CONFIG_PATH/app/Boostnote => $HOME/Boostnote"
 fi
 
 # setup plists
