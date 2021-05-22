@@ -45,19 +45,6 @@ else
   ln -s "$MYMAC_CONFIG_PATH/app/vim" "$HOME/.vim"
   echo "[OK] create a symbolic link $MYMAC_CONFIG_PATH/app/vim => $HOME/.vim"
 fi
-if [[ -e "$HOME/Boostnote" ]]; then
-  echo -n "warning: '$HOME/Boostnote' already exis6zats. override it? (y/N): "
-  if ! read -q; then
-    echo "\n[SKIP] create a symbolic link $MYMAC_CONFIG_PATH/app/Boostnote => $HOME/Boostnote"
-  else
-    rm -rf "$HOME/Boostnote"
-    ln -s "$MYMAC_CONFIG_PATH/app/Boostnote" "$HOME/Boostnote"
-    echo "\n[OK] create a symbolic link forcibly $MYMAC_CONFIG_PATH/app/Boostnote => $HOME/Boostnote"
-  fi
-else
-  ln -s "$MYMAC_CONFIG_PATH/app/Boostnote" "$HOME/Boostnote"
-  echo "[OK] create a symbolic link $MYMAC_CONFIG_PATH/app/Boostnote => $HOME/Boostnote"
-fi
 
 # setup plists
 cd "$MYMAC_CONFIG_PATH/plist" || (echo "error: $MYMAC_CONFIG_PATH/plist not found. there may be something wrong. try re-clone this repository." && exit)
