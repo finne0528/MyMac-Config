@@ -25,11 +25,17 @@ fi
 # homebrew settings
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# anyenv settings
-eval "$(anyenv init -)"
-
 # aliases
 alias relogin='exec $SHELL -l'
+
+# envs settings
+if command -v anyenv > /dev/null; then
+  eval "$(anyenv init -)"
+fi
+
+if command -v pyenv > /dev/null; then
+  eval "$(pyenv init -)"
+fi
 
 if command -v exa > /dev/null; then
   alias ls='exa'
@@ -43,8 +49,4 @@ fi
 
 if command -v bat > /dev/null; then
   alias cat='bat'
-fi
-
-if command -v skicka > /dev/null; then
-  alias drive="skicka"
 fi
